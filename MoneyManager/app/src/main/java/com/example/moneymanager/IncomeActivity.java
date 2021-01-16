@@ -45,7 +45,6 @@ public class IncomeActivity extends AppCompatActivity implements AdapterView.OnI
 
         //set action for back function on the toolbar
         getSupportActionBar().setTitle("New Income");
-     //   getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateButton = (Button) findViewById(R.id.mDateButton);
         categorySpinner = (Spinner) findViewById(R.id.mSpinner);

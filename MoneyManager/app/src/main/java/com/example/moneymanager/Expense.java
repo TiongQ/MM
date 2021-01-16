@@ -109,33 +109,6 @@ public class Expense extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
- /*   public void saveData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-      //  editor.putString(TRANSACTIONTEXT, newTransaction.getText().toString());
-      //  editor.putString(AMOUNTTEXT, amount.getText().toString());
-      //  editor.putString(CATEGORYTEXT, categorySpinner.getSelectedItem().toString());
-        editor.putString(DATE_TEXT, dateView.getText().toString());
-
-        editor.apply();
-
-        Toast.makeText(this, "New Transaction Saved", Toast.LENGTH_SHORT).show();
-    } */
-
-  /*  public void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        transactionText = sharedPreferences.getString(TRANSACTIONTEXT, "");
-        amountText = sharedPreferences.getString(AMOUNTTEXT, "");
-        categoryText = sharedPreferences.getString(CATEGORYTEXT, "");
-    } */
-
-  /*  public void updateViews(){
-        transactionView.setText(transactionText);
-        amountView.setText(amountText);
-        categoryView.setText(categoryText);
-    } */
-
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();

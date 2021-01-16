@@ -63,7 +63,6 @@ public class DashboardFragment<itemList> extends Fragment {
     private RecyclerView incomeRecycler;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,150 +135,6 @@ public class DashboardFragment<itemList> extends Fragment {
         return view;
     }
 
-    //read data from Firebase for calculation
-    private void readData(CallFirebase callFirebase) {
-
-        //calculate total income
-        incomeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()) {
-                    Model data = ds.getValue(Model.class);
-                    incDouble += data.getAmount();
-                    totalIncome.setText(String.valueOf(incDouble));
-                    incomeList.add(incDouble);
-                }
-                callFirebase.onCall(incomeList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        //calculate total expense
-        expenseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()) {
-                    Model data = ds.getValue(Model.class);
-                    expDouble += data.getAmount();
-                    totalExpense.setText(String.valueOf(expDouble));
-                    expenseList.add(expDouble);
-                }
-                callFirebase.onCall(expenseList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    //deal with asynchronous properties of Firebase
-    private interface CallFirebase {
-        void onCall(List<Double> list);
-    }
-
-    //floating action button animation
-    private void fabAnimation() {
-        if(isOpen) {
-            fabIncome.startAnimation(fabClose);
-            fabExpense.startAnimation(fabClose);
-            fabIncome.setClickable(false);
-            fabExpense.setClickable(false);
-            incomeTxt.startAnimation(fabClose);
-            expenseTxt.startAnimation(fabClose);
-            incomeTxt.setClickable(false);
-            expenseTxt.setClickable(false);
-            isOpen = false;
-        }
-        else {
-            fabIncome.startAnimation(fabOpen);
-            fabExpense.startAnimation(fabOpen);
-            fabIncome.setClickable(true);
-            fabExpense.setClickable(true);
-            incomeTxt.startAnimation(fabOpen);
-            expenseTxt.startAnimation(fabOpen);
-            incomeTxt.setClickable(true);
-            expenseTxt.setClickable(true);
-            isOpen = true;
-        }
-    }
-
-    //add data to Firebase
-    private void addData() {
-        fabExpense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),Expense.class));
-            }
-        });
-
-        fabIncome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             //   insertIncome();
-                startActivity(new Intent(getContext(), IncomeActivity.class));
-            }
-        });
-    }
-
-  /*  public void insertIncome() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        View view = layoutInflater.inflate(R.layout.insert_income, null);
-        dialog.setView(view);
-        AlertDialog dialog1 = dialog.create();
-
-        EditText amountETxt = view.findViewById(R.id.incomeAmount);
-        EditText descriptionETxt = view.findViewById(R.id.incomeDesc);
-        EditText categoryETxt = view.findViewById(R.id.incomeType);
-        Button saveBtn = view.findViewById(R.id.incomeSaveBtn);
-        Button cancelBtn = view.findViewById(R.id.incomeCancelBtn);
-
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //store input data to string
-                String amount = amountETxt.getText().toString().trim();
-                String description = descriptionETxt.getText().toString().trim();
-                String category = categoryETxt.getText().toString().trim();
-
-                if(TextUtils.isEmpty(description)) {
-                    descriptionETxt.setError("Please enter Description");
-                    return;
-                }
-                if(TextUtils.isEmpty(amount)) {
-                    amountETxt.setError("Please enter Amount");
-                    return;
-                }
-                if(TextUtils.isEmpty(category)) {
-                    categoryETxt.setError("Please enter Category");
-                    return;
-                }
-                double amountD = Double.parseDouble(amount);
-
-                String id = expenseRef.push().getKey(); //create random id to store new data
-                String date = DateFormat.getDateInstance().format(new Date()); //get current date
-                Model data = new Model(amountD, description, category, date); //pass values
-                incomeRef.child(id).setValue(data);
-                Toast.makeText(getActivity(), "Data Added", Toast.LENGTH_SHORT).show();
-                fabAnimation();
-                dialog1.dismiss();
-            }
-        });
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { dialog1.dismiss(); }
-        });
-
-        dialog1.show();
-    } */
-
     @Override
     public void onStart() {
         super.onStart();
@@ -323,6 +178,96 @@ public class DashboardFragment<itemList> extends Fragment {
             }
         };
         expenseRecycler.setAdapter(expAdapter);
+    }
+
+    //add data to Firebase
+    private void addData() {
+        fabExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),Expense.class));
+            }
+        });
+
+        fabIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), IncomeActivity.class));
+            }
+        });
+    }
+
+    //deal with asynchronous properties of Firebase
+    private interface CallFirebase {
+        void onCall(List<Double> list);
+    }
+
+    //read data from Firebase for calculation
+    private void readData(CallFirebase callFirebase) {
+
+        //calculate total income
+        incomeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Model data = ds.getValue(Model.class);
+                    incDouble += data.getAmount();
+                    totalIncome.setText(String.valueOf(incDouble));
+                    incomeList.add(incDouble);
+                }
+                callFirebase.onCall(incomeList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //calculate total expense
+        expenseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Model data = ds.getValue(Model.class);
+                    expDouble += data.getAmount();
+                    totalExpense.setText(String.valueOf(expDouble));
+                    expenseList.add(expDouble);
+                }
+                callFirebase.onCall(expenseList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //floating action button animation
+    private void fabAnimation() {
+        if(isOpen) {
+            fabIncome.startAnimation(fabClose);
+            fabExpense.startAnimation(fabClose);
+            fabIncome.setClickable(false);
+            fabExpense.setClickable(false);
+            incomeTxt.startAnimation(fabClose);
+            expenseTxt.startAnimation(fabClose);
+            incomeTxt.setClickable(false);
+            expenseTxt.setClickable(false);
+            isOpen = false;
+        }
+        else {
+            fabIncome.startAnimation(fabOpen);
+            fabExpense.startAnimation(fabOpen);
+            fabIncome.setClickable(true);
+            fabExpense.setClickable(true);
+            incomeTxt.startAnimation(fabOpen);
+            expenseTxt.startAnimation(fabOpen);
+            incomeTxt.setClickable(true);
+            expenseTxt.setClickable(true);
+            isOpen = true;
+        }
     }
 
     //display income data
