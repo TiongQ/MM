@@ -1,18 +1,13 @@
 package com.example.moneymanager;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,11 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment<itemList> extends Fragment {
 
     //Firebase
     private FirebaseUser firebaseUser;
@@ -58,12 +53,16 @@ public class DashboardFragment extends Fragment {
     //income, expense and balance
     private TextView totalIncome;
     private TextView totalExpense;
-    private TextView totalBalance,exp;
-    public double balance, expDouble, incDouble;
+    private TextView totalBalance;
+    private ArrayList<Double> incomeList = new ArrayList<>();
+    private ArrayList<Double> expenseList = new ArrayList<>();
+    private double balance, expDouble, incDouble;
 
     //recycler view
     private RecyclerView expenseRecycler;
     private RecyclerView incomeRecycler;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public class DashboardFragment extends Fragment {
         });
 
         //set recycler view layout
-        LinearLayoutManager incomeLM = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false); //view data horizontal
+        LinearLayoutManager incomeLM = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         incomeLM.setStackFromEnd(true);
         incomeLM.setReverseLayout(true);
         incomeRecycler.setHasFixedSize(true);
@@ -126,24 +125,50 @@ public class DashboardFragment extends Fragment {
         expenseRecycler.setHasFixedSize(true);
         expenseRecycler.setLayoutManager(expenseLM);
 
+        readData(new CallFirebase() {
+            @Override
+            public void onCall(List<Double> list) {
+                balance = incDouble - expDouble;
+                totalBalance.setText(String.valueOf(balance));
+            }
+        });
+
+        return view;
+    }
+
+    //read data from Firebase for calculation
+    private void readData(CallFirebase callFirebase) {
+
+        //calculate total income
+        incomeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Model data = ds.getValue(Model.class);
+                    incDouble += data.getAmount();
+                    totalIncome.setText(String.valueOf(incDouble));
+                    incomeList.add(incDouble);
+                }
+                callFirebase.onCall(incomeList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //calculate total expense
         expenseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                double total = 0.0;
-                String totalStr;
-
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     Model data = ds.getValue(Model.class);
-                    total += data.getAmount();
-                    totalStr = String.valueOf(total);
-                    totalExpense.setText(totalStr);
-
-                  //  exp.setText(String.valueOf(total));
-                  //  exp.setSelection(String.valueOf(total).length());
-                  //  totalStr = exp.getText().toString().trim();
-                    expDouble = Double.parseDouble(totalStr);
+                    expDouble += data.getAmount();
+                    totalExpense.setText(String.valueOf(expDouble));
+                    expenseList.add(expDouble);
                 }
+                callFirebase.onCall(expenseList);
             }
 
             @Override
@@ -151,35 +176,11 @@ public class DashboardFragment extends Fragment {
 
             }
         });
+    }
 
-        //calculate total income
-        incomeRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                double total = 0.0;
-                String totalStr;
-
-                for(DataSnapshot ds : snapshot.getChildren()) {
-                    Model data = ds.getValue(Model.class);
-                    total += data.getAmount();
-                    totalStr = String.valueOf(total);
-                    totalIncome.setText(totalStr);
-                    incDouble = Double.parseDouble(totalStr);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        //calculate balance
-        balance = incDouble;
-        String balanceStr = String.valueOf(balance);
-        totalBalance.setText(balanceStr);
-
-        return view;
+    //deal with asynchronous properties of Firebase
+    private interface CallFirebase {
+        void onCall(List<Double> list);
     }
 
     //floating action button animation
@@ -226,7 +227,7 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-    public void insertIncome() {
+  /*  public void insertIncome() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
         View view = layoutInflater.inflate(R.layout.insert_income, null);
@@ -256,11 +257,10 @@ public class DashboardFragment extends Fragment {
                     return;
                 }
                 if(TextUtils.isEmpty(category)) {
-                    categoryETxt.setError("Please enter category");
+                    categoryETxt.setError("Please enter Category");
                     return;
                 }
                 double amountD = Double.parseDouble(amount);
-
 
                 String id = expenseRef.push().getKey(); //create random id to store new data
                 String date = DateFormat.getDateInstance().format(new Date()); //get current date
@@ -278,7 +278,7 @@ public class DashboardFragment extends Fragment {
         });
 
         dialog1.show();
-    }
+    } */
 
     @Override
     public void onStart() {

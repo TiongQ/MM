@@ -30,7 +30,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Expense"
-                    android:textAppearance="?android:textAppearanceMedium"/>
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="#151313" />
 
 
             </RelativeLayout>
@@ -47,7 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.00"
-                    android:textAppearance="?android:textAppearanceMedium" />
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="#0E0D0D" />
             </RelativeLayout>
         </LinearLayout>
 

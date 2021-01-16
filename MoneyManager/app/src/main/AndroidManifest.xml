@@ -9,9 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyManager">
-        <activity android:name=".IncomeActivity"></activity>
-        <activity android:name=".HomePage" />
-        <activity android:name=".Expense" />
+        <activity
+            android:name=".IncomeActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".HomePage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".Expense"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

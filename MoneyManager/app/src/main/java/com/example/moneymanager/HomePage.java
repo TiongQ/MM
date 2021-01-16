@@ -35,7 +35,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.activity_home_page);
 
         Toolbar toolbar = findViewById(R.id.myToolBar);
-     //   setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

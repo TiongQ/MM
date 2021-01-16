@@ -44,12 +44,4 @@ public class Model {
     public void setDate(String date) {
         this.date = date;
     }
-
-  /*  public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.date = id;
-    } */
 }

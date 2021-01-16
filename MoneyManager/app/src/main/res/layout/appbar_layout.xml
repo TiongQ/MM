@@ -12,19 +12,19 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/myToolBar"
-            android:label="Money Manager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/teal_700"
+            android:label="Money Manager"
             app:subtitleTextColor="#FFFFFF"
+            app:title="Money Manager"
             app:titleTextColor="@color/white">
 
         </androidx.appcompat.widget.Toolbar>
         
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main">
+    <include layout="@layout/content_main"/>
 
-    </include>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
