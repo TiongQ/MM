@@ -1,6 +1,7 @@
 package com.example.moneymanager;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,7 +28,7 @@ import java.util.Calendar;
 public class Expense extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
     private Button saveButton;
-    private Button cancelButton;
+    private Button resetButton;
     private Button dateButton;
     private Spinner categorySpinner;
     private EditText amountET;
@@ -48,7 +49,7 @@ public class Expense extends AppCompatActivity implements AdapterView.OnItemSele
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         saveButton = (Button) findViewById(R.id.incSaveBtn);
-        cancelButton = (Button) findViewById(R.id.incCancelBtn);
+        resetButton = (Button) findViewById(R.id.incCancelBtn);
         dateButton = (Button) findViewById(R.id.mDateButton);
         categorySpinner = (Spinner) findViewById(R.id.mSpinner);
         amountET = (EditText) findViewById(R.id.mAmount);
@@ -82,8 +83,11 @@ public class Expense extends AppCompatActivity implements AdapterView.OnItemSele
                 String description = descriptionET.getText().toString().trim();
                 String category = categorySpinner.getSelectedItem().toString().trim();
                 String date = dateView.getText().toString().trim();
-                double amountD = Double.parseDouble(amount);
-                
+
+                if(TextUtils.isEmpty(date)) {
+                    dateView.setError("Choose a Date");
+                    return;
+                }
                 if(TextUtils.isEmpty(description)) {
                     descriptionET.setError("Please enter Description");
                     return;
@@ -92,9 +96,21 @@ public class Expense extends AppCompatActivity implements AdapterView.OnItemSele
                     amountET.setError("Please enter Amount");
                     return;
                 }
+
+                double amountD = Double.parseDouble(amount);
                 Model data = new Model(amountD, description, category, date); //pass values
                 expenseRef.child(id).setValue(data);
                 Toast.makeText(Expense.this, "Data Saved", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), DashboardFragment.class));
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descriptionET.setText("");
+                amountET.setText("");
+                dateView.setText("");
             }
         });
     }

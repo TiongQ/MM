@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DashboardFragment<itemList> extends Fragment {
+public class DashboardFragment extends Fragment {
 
     //Firebase
     private FirebaseUser firebaseUser;

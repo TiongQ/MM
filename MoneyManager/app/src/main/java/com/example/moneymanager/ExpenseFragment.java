@@ -84,13 +84,11 @@ public class ExpenseFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 double totalExpense = 0.0;
-                String totalExpenseStr;
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     Model data = ds.getValue(Model.class);
                     totalExpense += data.getAmount();
-                    totalExpenseStr = String.valueOf(totalExpense);
-                    totalExpenseTV.setText(totalExpenseStr);
+                    totalExpenseTV.setText(String.valueOf(totalExpense));
                 }
             }
 
@@ -230,6 +228,7 @@ public class ExpenseFragment extends Fragment {
             public void onClick(View v) {
                 description = descET.getText().toString().trim();
                 category = spinner1.getSelectedItem().toString().trim();
+                date = dateTV.getText().toString().trim();
                 String amountS = String.valueOf(amount);
                 amountS = amountET.getText().toString().trim();
                 double amountD = Double.parseDouble(amountS);

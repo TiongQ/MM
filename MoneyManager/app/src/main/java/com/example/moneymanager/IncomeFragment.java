@@ -45,8 +45,6 @@ public class IncomeFragment extends Fragment {
     private EditText descET;
     private EditText amountET;
     private TextView dateTV;
-    private TextView newDateTV;
-    private TextView categoryTV;
     private Button modifyBtn;
     private Button deleteBtn;
     private Button dateBtn;
@@ -84,13 +82,11 @@ public class IncomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 double totalIncome = 0.0;
-                String totalIncomeStr;
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     Model data = ds.getValue(Model.class);
                     totalIncome += data.getAmount();
-                    totalIncomeStr = String.valueOf(totalIncome);
-                    totalIncomeTV.setText(totalIncomeStr);
+                    totalIncomeTV.setText(String.valueOf(totalIncome));
                 }
             }
 

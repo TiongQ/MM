@@ -8,7 +8,7 @@
         android:title="Income"
         android:icon="@drawable/ic_income"/>
     <item android:id="@+id/icExpense"
-        android:title="Expense"
+        android:title="Expenses"
         android:icon="@drawable/ic_expense"/>
     <item android:id="@+id/icSignOut"
         android:title="Sign Out"
