@@ -7,18 +7,4 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="Food">#FF8C00</color>
-    <color name="Bills">#66BB6A</color>
-    <color name="Transportation">#DE3163</color>
-    <color name="Shopping">#29B6F6</color>
-    <color name="Health">#9932CC</color>
-    <color name="Pet">#FFF633</color>
-    <color name="Travel">#696969</color>
-    <color name="Education">#FF69B4</color>
-    <color name="Others">#A04000</color>
-
-    <color name="color_one">#fb7268</color>
-    <color name="color_white">#ededf2</color>
-    <color name="color_two">#E3E0E0</color>
 </resources>
