@@ -129,9 +129,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onCall(List<Double> list) {
                 balance = incDouble - expDouble;
-              //  totalBalance.setText(String.valueOf(balance));
-                totalBalance.setText(df.format(incDouble - expDouble));
-
+                totalBalance.setText(String.valueOf(balance));
+              //  totalBalance.setText(df.format(incDouble - expDouble));
             }
         });
 

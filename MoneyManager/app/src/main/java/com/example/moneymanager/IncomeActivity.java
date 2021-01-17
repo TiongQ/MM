@@ -1,7 +1,6 @@
 package com.example.moneymanager;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -103,7 +102,6 @@ public class IncomeActivity extends AppCompatActivity implements AdapterView.OnI
                 Model data = new Model(amountD, description, category, date); //pass values
                 incomeRef.child(id).setValue(data);
                 Toast.makeText(IncomeActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), DashboardFragment.class));
             }
         });
 

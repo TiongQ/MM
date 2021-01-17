@@ -1,7 +1,6 @@
 package com.example.moneymanager;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -101,8 +100,8 @@ public class Expense extends AppCompatActivity implements AdapterView.OnItemSele
                 Model data = new Model(amountD, description, category, date); //pass values
                 expenseRef.child(id).setValue(data);
                 Toast.makeText(Expense.this, "Data Saved", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), DashboardFragment.class));
             }
+
         });
 
         resetButton.setOnClickListener(new View.OnClickListener() {

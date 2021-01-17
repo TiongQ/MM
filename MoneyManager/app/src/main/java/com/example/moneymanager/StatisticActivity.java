@@ -85,7 +85,13 @@ public class StatisticActivity extends AppCompatActivity {
         readData(new CallFirebase() {
             @Override
             public void onCall(List<Double> list) {
-
+                salaryTV.setText(df.format(salaryAmt / incDouble * 100));
+                awardsTV.setText(df.format(awardsAmt / incDouble * 100));
+                investTV.setText(df.format(investAmt / incDouble * 100));
+                dividendTV.setText(df.format(dividendAmt / incDouble * 100));
+                refundTV.setText(df.format(refundAmt / incDouble * 100));
+                lotteryTV.setText(df.format(lotteryAmt / incDouble * 100));
+                incOthersTV.setText(df.format(incOthersAmt / incDouble * 100));
 
                 foodTV.setText(df.format(foodAmt / expDouble * 100));
                 billsTV.setText(df.format(billsAmt / expDouble * 100));
@@ -96,15 +102,6 @@ public class StatisticActivity extends AppCompatActivity {
                 travelTV.setText(df.format(travelAmt / expDouble * 100));
                 educationTV.setText(df.format(eduAmt / expDouble * 100));
                 expOthersTV.setText(df.format(expOthersAmt / expDouble * 100));
-
-                salaryTV.setText(df.format(salaryAmt / incDouble * 100));
-                awardsTV.setText(df.format(awardsAmt / incDouble * 100));
-                investTV.setText(df.format(investAmt / incDouble * 100));
-                dividendTV.setText(df.format(dividendAmt / incDouble * 100));
-                refundTV.setText(df.format(refundAmt / incDouble * 100));
-                lotteryTV.setText(df.format(lotteryAmt / incDouble * 100));
-                incOthersTV.setText(df.format(incOthersAmt / incDouble * 100));
-
             }
         });
 

@@ -55,14 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                //create new user
-           /*     firebase.createUserWithEmailAndPassword(em,pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    }
-                }); */
-
                 firebase.signInWithEmailAndPassword(em,pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
