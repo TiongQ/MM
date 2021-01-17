@@ -93,6 +93,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 firebaseAuth.signOut();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 break;
+            case R.id.icStatistic:
+                startActivity(new Intent(getApplicationContext(), StatisticActivity.class));
+                break;
         }
 
         if(fragment != null) {

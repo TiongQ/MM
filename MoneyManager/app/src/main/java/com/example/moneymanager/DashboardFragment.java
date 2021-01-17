@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +58,11 @@ public class DashboardFragment extends Fragment {
     private ArrayList<Double> incomeList = new ArrayList<>();
     private ArrayList<Double> expenseList = new ArrayList<>();
     private double balance, expDouble, incDouble;
+    public DecimalFormat df = new DecimalFormat("##.##");
 
     //recycler view
     private RecyclerView expenseRecycler;
     private RecyclerView incomeRecycler;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onCall(List<Double> list) {
                 balance = incDouble - expDouble;
-                totalBalance.setText(String.valueOf(balance));
+              //  totalBalance.setText(String.valueOf(balance));
+                totalBalance.setText(df.format(incDouble - expDouble));
+
             }
         });
 
@@ -180,7 +183,7 @@ public class DashboardFragment extends Fragment {
         expenseRecycler.setAdapter(expAdapter);
     }
 
-    //add data to Firebase
+    //floating button add data
     private void addData() {
         fabExpense.setOnClickListener(new View.OnClickListener() {
             @Override

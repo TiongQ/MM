@@ -20,7 +20,7 @@
         <item>Pet</item>
         <item>Travel</item>
         <item>Education</item>
-        <item>Others</item>
+        <item>eOthers</item>
     </string-array>
 
     <string-array name="category2">
@@ -30,7 +30,7 @@
         <item>Dividends</item>
         <item>Refunds</item>
         <item>Lottery</item>
-        <item>Others</item>
+        <item>iOthers</item>
     </string-array>
     <string name="title_activity_example">example</string>
     <string name="title_activity_home_page">HomePage</string>
